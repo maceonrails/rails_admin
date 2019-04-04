@@ -70,7 +70,7 @@ module RailsAdmin
         end
       end
       
-      if model_config.list.sort_by.present? && abstract_model.table_name.classify.constantize.columns_hash[model_config.list.sort_by.to_s].type == :string
+      if params[:sort] != 'id' && model_config.list.sort_by.present? && abstract_model.table_name.classify.constantize.columns_hash[model_config.list.sort_by.to_s].type == :string
         column = "LOWER(#{column})"
       end
       
