@@ -70,7 +70,9 @@ module RailsAdmin
         end
       end
       
-      column = model_config.list.sort_case_insensitive ? "LOWER(#{column})" : column
+      if model_config.list.sort_by
+        column = abstract_model.columns_hash[model_config.list.sort_by.to_s].type == :string ? "LOWER(#{column})" : column
+      end
       
       reversed_sort = (field ? field.sort_reverse? : model_config.list.sort_reverse?)
       {sort: column, sort_reverse: (params[:sort_reverse] == reversed_sort.to_s)}
