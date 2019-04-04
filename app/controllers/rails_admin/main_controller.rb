@@ -69,9 +69,11 @@ module RailsAdmin
           "#{abstract_model.table_name}.#{field.sortable}"
         end
       end
-
+      
+      column = model_config.list.sort_case_insensitive ? "LOWER(#{column})" : column
+      
       reversed_sort = (field ? field.sort_reverse? : model_config.list.sort_reverse?)
-      {sort: "LOWER(#{column})", sort_reverse: (params[:sort_reverse] == reversed_sort.to_s)}
+      {sort: column, sort_reverse: (params[:sort_reverse] == reversed_sort.to_s)}
     end
 
     def redirect_to_on_success
