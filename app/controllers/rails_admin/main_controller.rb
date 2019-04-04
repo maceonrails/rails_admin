@@ -70,8 +70,8 @@ module RailsAdmin
         end
       end
       
-      if model_config.list.sort_by
-        column = abstract_model.table_name.classify.constantize.columns_hash[model_config.list.sort_by.to_s].type == :string ? "LOWER(#{column})" : column
+      if model_config.list.sort_by.present? && abstract_model.table_name.classify.constantize.columns_hash[model_config.list.sort_by.to_s].type == :string
+        column = "LOWER(#{column})"
       end
       
       reversed_sort = (field ? field.sort_reverse? : model_config.list.sort_reverse?)
